@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -35,12 +39,26 @@ class BookController extends Controller
     /**
      * Store a newly created book in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateBookRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBookRequest $request)
     {
-        //
+        $data = $request->validated();
+        try {
+            DB::transaction(function () use ($data) {
+                Book::create([
+                    'title' => $data['title'],
+                    'isbn_code' => $data['isbn'],
+                    'publication_year' => $data['publication_year'],
+                    'user_id' => $data['created_by'],
+                ]);
+            });
+        } catch (Exception $th) {
+            return redirect()->back()->with('error', __('There was an error creating the book.') . $th->getMessage());
+        }
+
+        return redirect()->back()->with('status', __('Book created successfully.'));
     }
 
     /**
@@ -51,7 +69,10 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('books.show', [
+            'book' => Book::findOrFail($id)
+        ]);
+
     }
 
     /**
@@ -71,13 +92,30 @@ class BookController extends Controller
     /**
      * Update the specified book in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateBookRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+        try {
+            DB::transaction(function () use ($data, $id) {
+                $book = Book::findOrFail($id);
+
+                $book->title = $data['title'];
+                $book->isbn_code = $data['isbn'];
+                $book->publication_year = $data['publication_year'];
+                $book->user_id = $data['created_by'];
+
+                $book->save();
+
+            });
+        } catch (Exception $th) {
+            return redirect()->back()->with('error', __('There was an error updating the book.') . $th->getMessage());
+        }
+
+        return redirect()->back()->with('status', __('Book updated successfully.'));
     }
 
     /**
@@ -88,6 +126,15 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::transaction(function () use ($id) {
+                $book = Book::findOrFail($id);
+                $book->delete();
+            });
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', __('There was an error deleting the book.') . $th->getMessage());
+        }
+
+        return redirect()->back()->with('status', __('Book deleted successfully.'));
     }
 }

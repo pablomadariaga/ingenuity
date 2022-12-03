@@ -6,7 +6,7 @@ use App\Rules\Isbn;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class BookRequest extends FormRequest
+class CreateBookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,8 @@ class BookRequest extends FormRequest
         return [
             'title' => 'required|string|max:500',
             'isbn' => ['required','unique:books,isbn_code', 'max:17', new Isbn],
-            'publication_year' => 'required|digits:4|integer|min:1900|max:'.date('Y')
+            'publication_year' => 'required|digits:4|integer|min:1900|max:'.date('Y'),
+            'created_by' => 'required|integer|exists:users,id'
         ];
     }
 }

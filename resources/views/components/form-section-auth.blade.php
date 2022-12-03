@@ -8,6 +8,13 @@
             </div>
         </div>
         @endif
+        @if (session('error'))
+        <div class="col-md-12">
+            <div class="alert alert-error" role="alert">
+                {{ session('error') }}
+            </div>
+        </div>
+        @endif
         <div class="col-6">
             <h2>{{$title}}</h2>
         </div>

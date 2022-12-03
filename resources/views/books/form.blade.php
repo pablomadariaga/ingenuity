@@ -3,6 +3,9 @@
 @section('content')
 <x-form-section-auth listRoute="{{route('books.index')}}" listTitle="{{__('Book list')}}"
     action="{{ route('books.store') }}">
+    @isset($book)
+    @method('PUT')
+    @endisset
     <x-slot name="title">{{__('Books')}}</x-slot>
     <x-slot name="subTitle">{{isset($book) ? __('Edit Book').' '.$book->title : __('Create book')}}</x-slot>
 

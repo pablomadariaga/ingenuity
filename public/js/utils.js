@@ -275,6 +275,19 @@ function initSlimSelect() {
     })
 }
 
+function deleteBook() {
+    const deleteBook = document.getElementById('deleteBook')
+    deleteBook.addEventListener('show.bs.modal', event => {
+  // Button that triggered the modal
+  const button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  const recipient = button.getAttribute('data-bs-whatever')
+
+  const modalBodyInput = deleteBook.querySelector('.modal-body #delete-id')
+  modalBodyInput.value = recipient
+})
+}
+
 //Functions run on ready dom
 ready(() => {
     initMask();
