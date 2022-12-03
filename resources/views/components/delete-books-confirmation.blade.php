@@ -11,12 +11,12 @@
                     @method('DELETE')
                     <input id="delete-id" name="id" hidden>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-danger">
-                    {{ __('Delete') }}
-                </button>
+                <div class="text-right">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger ms-3">
+                        {{ __('Delete') }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
