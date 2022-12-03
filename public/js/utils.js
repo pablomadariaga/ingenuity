@@ -157,6 +157,12 @@ function onEvent(event, querySelector, callback) {
     });
 }
 
+function updateDirectly() {
+    document.getElementById('update-book-id').addEventListener('keyup',function(){
+        var link = document.getElementById('update-directly')
+        var href = link.getAttribute('href')
+    })
+}
 
 //Functions run on ready dom
 ready(() => {
