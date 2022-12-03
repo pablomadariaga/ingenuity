@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://ingesoftllc.com/" target="_blank"><img src="https://github.com/pablomadariaga/ingenuity/blob/d505efa8a6f875465a4b736cee0979426da7e2e0/resources/views/components/application-logo.svg" width="400" alt="Ingenuity Logo"></a></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -7,60 +7,157 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ES
+# Configuración del proyecto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+De acuerdo a los requerimientos de la prueba para desarrollo práctico en el proceso de selección, estos son los puntos a seguir para la configuración del proyecto.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Se asume como primer punto que Apache2, MySQL 8 y PHP 8.1> ya han sido instalados y configurados en el servidor.
+-   Instalar composer de manera global para nuestro sistema operativo.
+-   Crear la base de datos en nuestro MySQL.
+-   Bajar el repositorio al servidor donde correremos nuestra aplicación.
+-   Configurar el archivo con las variables de entorno para nuestra aplicación.
+-   Bajar las dependencias del proyecto.
+-   Realizar migraciones de las tablas a la base de datos y correr el proyecto.
+-   Construir aplicación front
 
-## Learning Laravel
+## Instalar composer
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+En el siguiente enlace podemos encontrar una guía completa sobre la instalación y configuración de Composer en nuestro S.O de manera global [composer](https://getcomposer.org/doc/00-intro.md).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Crear base de datos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Creamos la base de datos para nuestra aplicación, a continuación podemos ver el comando para realizar esto en nuestro MySQL, `nombre_bd` puede ser cualquier denominación sin caracteres especiales ni espacios.
 
-## Laravel Sponsors
+-   CREATE DATABASE `nombre_bd` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Clonar repositorio
+Copiamos el repositorio al root de nuestro servidor apache, _ingenuity_ puede ser cualquier denominación sin caracteres especiales.
 
-### Premium Partners
+-   git clone https://github.com/pablomadariaga/ingenuity.git _ingenuity_
+-   Ahora ingresamos a nuestra carpeta **ingenuity**, de aquí en adelante los pasos a seguir son dentro de esta ruta
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Configurar .env
 
-## Contributing
+Después de clonar nuestro repositorio, accedemos a nuestro proyecto desde la terminal, luego debemos duplicar el archivo **.env.example** con el nombre del nuevo archivo igual a **.env** y configurar las siguientes variables.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   comando: cp .env.example .env
+-   variables
+    1. APP_NAME = 'El nombre que queramos para el proyecto'
+    1. APP_URL = 'Url o IP designada para correr el proyecto'    
+    1. DB_HOST = HOST para nuestro servidor MySQL
+    1. DB_PORT = PUERTO para nuestro servidor MySQL
+    1. DB_DATABASE = Nombre de la base de datos que creamos
+    1. DB_USERNAME = Nombre de usuario de MySQL
+    1. DB_PASSWORD = Si el usuario tiene contraseña
 
-## Code of Conduct
+## Dependencias
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ejecute los siguientes comandos desde la consola dentro de nuestra carpeta raíz del proyecto para instalar todas las dependencias de PHP.
 
-## Security Vulnerabilities
+-   composer i
+-   php artisan config:cache
+-   php artisan key:generate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Correr migraciones para la base de datos y correr la aplicación
+
+Ejecute los siguientes comandos desde la consola dentro de nuestra carpeta raíz del proyecto.
+
+-   php artisan migrate:fresh --seed
+    **Para finalizar corremos el servidor**
+-   _php artisan serve_ , este comando no es necesario si tenemos un servidor para descubrir nuestras aplicaciones automáticamente, simplemente accedemos a la url configurada en nuestro servidor para la aplicación
+
+## Construir aplicación front
+
+Ejecute el siguiente comando instalar para construir nuestros módulos de JavaScript y CSS
+
+-   npm install && npm run build
+
+Ahora puede acceder a la aplicación *ingenuity*, por medio de la ip o url designada.
+
+Cualquier duda sobre la configuración del proyecto, puede comunicarse conmigo por medio de correo electrónico o celular. 
+**+57 3113350596**
+[juanpablomadariagacardona@gmail.com](mailto:mailjuanpablomadariagacardona@gmail.com)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+El Framework de Laravel es un software de código abierto con licencia bajo [MIT license](https://opensource.org/licenses/MIT).
+
+
+## EN
+
+# project configuration
+
+According to the requirements of the test for practical development in the selection process, these are the points to follow for the configuration of the project.
+
+- It is assumed as a first point that Apache2, MySQL 8 and PHP 8.1> have already been installed and configured on the server.
+- Install composer globally for our operating system.
+- Create the database in our MySQL.
+- Download the repository to the server where we will run our application.
+- Configure the file with the environment variables for our application.
+- Download the dependencies of the project.
+- Perform migrations of the tables to the database and run the project.
+- Build front app
+
+## Install composer
+
+In the following link we can find a complete guide on the installation and configuration of Composer in our OS globally [composer](https://getcomposer.org/doc/00-intro.md).
+
+## Create database
+
+We create the database for our application, below we can see the command to do this in our MySQL, `db_name` can be any name without special characters or spaces.
+
+- CREATE DATABASE `db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+### Clone repository
+We copy the repository to the root of our apache server, _ingenuity_ can be any name without special characters.
+
+- git clone https://github.com/pablomadariaga/ingenuity.git _ingenuity_
+- Now we enter our folder **ingenuity**, from now on the steps to follow are within this path
+
+## Configure .env
+
+After cloning our repository, we access our project from the terminal, then we need to duplicate the **.env.example** file with the new file name equal to **.env** and set the following variables.
+
+- command: cp .env.example .env
+- variables
+    1. APP_NAME = 'The name we want for the project'
+    1. APP_URL = 'Url or IP designated to run the project'
+    1. DB_HOST = HOST for our MySQL server
+    1. DB_PORT = PORT for our MySQL server
+    1. DB_DATABASE = Name of the database that we created
+    1. DB_USERNAME = MySQL Username
+    1. DB_PASSWORD = If the user has a password
+
+## Dependencies
+
+Run the following commands from the console inside our project root folder to install all the PHP dependencies.
+
+- composer i
+- php artisan config:cache
+- php artisan key:generate
+
+## Run migrations for the database and run the application
+
+Run the following commands from the console inside our project root folder.
+
+- php artisan migrate:fresh --seed
+    **To finish we run the server**
+- _php artisan serve_ , this command is not necessary if we have a server to discover our applications automatically, we simply access the url configured on our server for the application
+
+## Build front application
+
+Run the following install command to build our JavaScript and CSS modules
+
+- npm install && npm run build
+
+You can now access the *ingenuity* application, via the designated ip or url.
+
+Any questions about the configuration of the project, you can contact me by email or cell phone.
+**+57 3113350596**
+[juanpablomadariagacardona@gmail.com](mailto:mailjuanpablomadariagacardona@gmail.com)
+
+## License
+
+The Laravel Framework is open source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
