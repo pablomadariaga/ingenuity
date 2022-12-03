@@ -2,7 +2,7 @@
 @section('title', isset($book) ? __('Edit Book').' '.$book->title : __('Create book'))
 @section('content')
 <x-form-section-auth listRoute="{{route('books.index')}}" listTitle="{{__('Book list')}}"
-    action="{{ route('books.store') }}">
+    action="{{ isset($book) ? route('books.update', $book) : route('books.store') }}">
     @isset($book)
     @method('PUT')
     @endisset

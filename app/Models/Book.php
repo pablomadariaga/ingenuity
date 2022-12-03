@@ -32,7 +32,7 @@ class Book extends Model
 
     // ---------------- Accessors & Mutators ----------------
 
-     /**
+    /**
      * Get directly the username that created the book.
      *
      * @return string
@@ -64,6 +64,38 @@ class Book extends Model
      */
     public function scopeOrderByDate($query)
     {
-        return $query->orderBy('created_at','DESC');
+        return $query->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     * Scope a query to get by search input.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string $search
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetBySearch($query, string $search = '')
+    {
+        if (trim($search) != '') {
+            return $query->where('title', 'like', "%$search%")
+                ->orWhere('isbn_code', 'like', "%$search%")
+                ->orWhere('publication_year', 'like', "%$search%");
+        }
+        return $query;
+    }
+
+    /**
+     * Scope a query to get by creator user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string $userId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetByUserId($query, int $userId = 0)
+    {
+        if ($userId) {
+            return $query->where('user_id', $userId);
+        }
+        return $query;
     }
 }

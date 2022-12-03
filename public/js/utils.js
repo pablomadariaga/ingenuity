@@ -238,6 +238,32 @@ const debounce = (func, timeout = 500) => {
 };
 
 /**
+ * init filters table listeners
+ */
+function initFilterTable() {
+    var userFilter = document.querySelector("[name='user']");
+    var serchFilter = document.getElementById("search");
+    if (userFilter && serchFilter) {
+        userFilter.addEventListener(
+            "change",
+            debounce((event) => {
+                if (event.target.value) {
+                    event.target.closest("form").submit();
+                }
+            }, 300)
+        );
+
+        serchFilter.addEventListener(
+            "input",
+            debounce((event) => {
+                if (event.target.value) {
+                    event.target.closest("form").submit();
+                }
+            }, 1000)
+        );
+    }
+}
+/**
  * Update directly by id
  */
 function updateDirectly() {
@@ -246,7 +272,6 @@ function updateDirectly() {
         updateTrigger.addEventListener(
             "keyup",
             debounce((event) => {
-                console.log(event.target.value);
                 if (event.target.value) {
                     var link = document.getElementById("update-directly");
                     var href = link.getAttribute("href");
@@ -281,16 +306,17 @@ function initSlimSelect() {
  */
 function initDeleteBook() {
     const deleteBook = document.getElementById("deleteBook");
-    deleteBook.addEventListener("show.bs.modal", (event) => {
-        console.log(event);
-        // Button that triggered the modal
-        const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        const recipient = button.getAttribute("data-bs-whatever");
+    if (deleteBook) {
+        deleteBook.addEventListener("show.bs.modal", (event) => {
+            // Button that triggered the modal
+            const button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            const recipient = button.getAttribute("data-bs-whatever");
 
-        const modalBodyInput = deleteBook.querySelector("#deleteId");
-        modalBodyInput.value = recipient;
-    });
+            const modalBodyInput = deleteBook.querySelector("#deleteId");
+            modalBodyInput.value = recipient;
+        });
+    }
 }
 
 //Functions run on ready dom
@@ -301,8 +327,9 @@ ready(() => {
     onlyLetters();
     onlyNumbers();
     onlyNoSpaces();
+    initAttrs(true);
     initDeleteBook();
     initSlimSelect();
     updateDirectly();
-    initAttrs(true);
+    initFilterTable();
 });

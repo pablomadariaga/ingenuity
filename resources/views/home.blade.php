@@ -63,9 +63,14 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card shadow">
-                <div class="card-header">{{ __('Last 5 books') }}</div>
+                <div class="card-header">
+                    {{ __('Last 5 books') }}
+                    <a class="btn btn-primary btn-sm float-end" href="{{ route('books.index') }}">
+                        {{__('Book list')}}
+                    </a>
+                </div>
                 <div class="card-body">
                     <table class="table table-striped table-borderless table-sm"
                         aria-describedby="{{ __('Last 5 books') }}">

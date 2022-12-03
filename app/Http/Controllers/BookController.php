@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
@@ -15,13 +16,39 @@ class BookController extends Controller
     /**
      * Display a listing of the book.
      *
+     * @param Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('books.index', [
-            'books' => Book::orderByDate()->paginate(10)
+            'books' => Book::getBySearch($request->input('search', '') ?? '')
+                ->getByUserId($request->input('user', 0) ?? 0)
+                ->orderByDate()->paginate(10),
+            'users' => User::all()
         ]);
+    }
+
+    /**
+     * export to excel
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function exportToExcel():Response
+    {
+        $books = Book::all();
+        $content = view('books.export', [
+            'books' => $books
+        ]);
+
+        $content = mb_convert_encoding($content, "Windows-1252", "UTF-8");
+        $status = 200;
+        $headers = [
+            'Content-Type' => 'application/vnd.ms-excel; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="books.xls"',
+        ];
+
+        return response($content, $status, $headers);
     }
 
     /**
@@ -72,7 +99,6 @@ class BookController extends Controller
         return view('books.show', [
             'book' => Book::findOrFail($id)
         ]);
-
     }
 
     /**
@@ -109,7 +135,6 @@ class BookController extends Controller
                 $book->user_id = $data['created_by'];
 
                 $book->save();
-
             });
         } catch (Exception $th) {
             return redirect()->back()->with('error', __('There was an error updating the book.') . $th->getMessage());
