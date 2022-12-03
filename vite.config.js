@@ -19,6 +19,7 @@ export default defineConfig({
                     "page-item",
                     "pagination",
                     "flex-sm-fill",
+                    "modal-backdrop",
                     "dropdown-toggle",
                     "justify-items-center",
                     "align-items-sm-center",
