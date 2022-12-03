@@ -121,12 +121,16 @@ class BookController extends Controller
     /**
      * Remove the specified book from storage.
      *
-     * @param  int  $id
+     * @param Request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         try {
+            $request->validate([
+                'id' => 'required|integer|exists:books,id'
+            ]);
+            $id = $request->id;
             DB::transaction(function () use ($id) {
                 $book = Book::findOrFail($id);
                 $book->delete();

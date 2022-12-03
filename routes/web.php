@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('home');
     });
 
-    Route::resource('books', BookController::class);
+    Route::resource('books', BookController::class)->except([
+        'destroy'
+    ]);
+    Route::delete('books/delete', [BookController::class, 'destroy'])->name('books.destroy');
 });
-
-

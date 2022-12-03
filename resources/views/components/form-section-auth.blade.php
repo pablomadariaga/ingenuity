@@ -10,7 +10,7 @@
         @endif
         @if (session('error'))
         <div class="col-md-12">
-            <div class="alert alert-error" role="alert">
+            <div class="alert alert-danger" role="alert">
                 {{ session('error') }}
             </div>
         </div>

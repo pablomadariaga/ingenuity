@@ -265,27 +265,32 @@ function updateDirectly() {
  * Init slim select if is-select class in select
  */
 function initSlimSelect() {
-    document.querySelectorAll('.is-select').forEach((element) => {
+    document.querySelectorAll(".is-select").forEach((element) => {
         new SlimSelect({
             select: element,
             settings: {
-                placeholderText: element.getAttribute('placeholder') ?? 'Select an option',
-            }
-        })
-    })
+                placeholderText:
+                    element.getAttribute("placeholder") ?? "Select an option",
+            },
+        });
+    });
 }
 
-function deleteBook() {
-    const deleteBook = document.getElementById('deleteBook')
-    deleteBook.addEventListener('show.bs.modal', event => {
-  // Button that triggered the modal
-  const button = event.relatedTarget
-  // Extract info from data-bs-* attributes
-  const recipient = button.getAttribute('data-bs-whatever')
+/**
+ * Init bootstrap delete confirmation modal
+ */
+function initDeleteBook() {
+    const deleteBook = document.getElementById("deleteBook");
+    deleteBook.addEventListener("show.bs.modal", (event) => {
+        console.log(event);
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        const recipient = button.getAttribute("data-bs-whatever");
 
-  const modalBodyInput = deleteBook.querySelector('.modal-body #delete-id')
-  modalBodyInput.value = recipient
-})
+        const modalBodyInput = deleteBook.querySelector("#deleteId");
+        modalBodyInput.value = recipient;
+    });
 }
 
 //Functions run on ready dom
@@ -296,6 +301,7 @@ ready(() => {
     onlyLetters();
     onlyNumbers();
     onlyNoSpaces();
+    initDeleteBook();
     initSlimSelect();
     updateDirectly();
     initAttrs(true);
