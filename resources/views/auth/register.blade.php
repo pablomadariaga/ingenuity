@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<x-form-section action="{{ route('register') }}">
+<x-form-section-guest action="{{ route('register') }}">
     <x-slot name="title">{{__('Register')}}</x-slot>
     <x-slot name="description">{{__('Sign up to manage books.')}}</x-slot>
     <div class="mb-4">
@@ -56,5 +56,5 @@
             {{ __('Already have an account?') }}
         </a>
     </div>
-</x-form-section>
+</x-form-section-guest>
 @endsection
