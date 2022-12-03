@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\Isbn;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UpdateBookRequest extends FormRequest
 {
@@ -27,8 +28,10 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:500',
-            'isbn' => ['required','unique:books,isbn_code,' . $this->isbn , 'max:17', new Isbn],
-            'publication_year' => 'required|digits:4|integer|min:1900|max:'.date('Y'),
+            'isbn' => [
+                'required', Rule::unique('books', 'isbn_code')->ignore(request()->segment(2)),  'max:17', new Isbn
+            ],
+            'publication_year' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
             'created_by' => 'required|integer|exists:users,id'
         ];
     }

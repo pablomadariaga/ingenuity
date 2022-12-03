@@ -55,14 +55,14 @@ class Isbn implements Rule
     {
         $splitLength = str($split)->length();
         $passes = false;
-        switch ($key) {
-            case 0||1:
+        switch (true) {
+            case ($key==0||$key==1):
                 $passes = $splitLength == 3;
                 break;
-            case 2:
+            case $key==2:
                 $passes = $splitLength == 4;
                 break;
-            case 3:
+            case $key==3:
                 $passes = $splitLength == 2;
                 break;
             default:

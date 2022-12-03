@@ -37,4 +37,5 @@ Route::middleware('auth')->group(function () {
         'destroy'
     ]);
     Route::delete('books/delete', [BookController::class, 'destroy'])->name('books.destroy');
+    Route::get('books/export/excel', [BookController::class, 'exportToExcel'])->name('books.excel');
 });

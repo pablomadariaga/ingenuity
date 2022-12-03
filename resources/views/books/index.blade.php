@@ -27,8 +27,46 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card shadow">
-                <div class="card-header">{{ __('Book list') }}</div>
+                <div class="card-header">
+                    {{ __('Book list') }}
+                    <div class="float-end d-flex gap-2 justify-content-end">
+                        <a href="{{ route('books.excel') }}" class="btn btn-sm btn-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+                                <path
+                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
                 <div class="card-body">
+                    <form action="{{ route('books.index') }}" method="GET">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="form-label">{{__('Filter table') }}</label>
+                                </div>
+                                <div class="col-sm-6 col-12 mb-4">
+                                    <input type="search" name="search" id="search" class="form-control"
+                                        placeholder="{{__('Search') }}" aria-label="{{__('Search') }}"
+                                        aria-describedby="btn-search" value="{{request()->get('search') ?? ''}}">
+                                </div>
+                                <div class="col-sm-6 col-12 mb-4">
+                                    <select id="user" class="is-select p-2" name="user"
+                                        placeholder="{{ __('Created by')}}" required>
+                                        <option value="" {{ (request()->get('user') ?? '') == '' ? 'selected' : ''
+                                            }}>All</option>
+                                        @foreach ($users as $user)
+                                        <option value="{{$user->id}}" {{ (request()->get('user') ?? '') == $user->id ?
+                                            'selected' : '' }}>{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="table table-striped table-borderless table-sm"
                             aria-describedby="{{ __('Book list') }}">
@@ -52,8 +90,8 @@
                                     <td>{{$book->publication_year}}</td>
                                     <td>{{$book->created_by}}</td>
                                     <td>{{americanFormat($book->created_at)}}</td>
-                                    <td class="text-end">
-                                        <div class="d-flex gap-2">
+                                    <td>
+                                        <div class="d-flex gap-2 justify-content-end">
                                             <a href="{{ route('books.edit', ['book' => $book]) }}"
                                                 class="btn btn-warning btn-sm">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -96,5 +134,5 @@
         </div>
     </div>
 </div>
-<x-delete-books-confirmation/>
+<x-delete-books-confirmation />
 @endsection
