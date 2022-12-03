@@ -1,8 +1,8 @@
 @extends('layouts.app')
-
+@section('title',__('Dashboard'))
 @section('content')
 <div class="container">
-    <div class="row gap-4 justify-content-center mb-4">
+    <div class="row justify-content-center mb-4">
         @if (session('status'))
         <div class="col-md-12">
             <div class="alert alert-success" role="alert">
@@ -11,7 +11,7 @@
         </div>
         @endif
         <div class="col-6">
-            <a href="" class="text-decoration-none">
+            <a href="{{ route('books.create') }}" class="text-decoration-none">
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row">
@@ -36,7 +36,7 @@
             </a>
         </div>
         <div class="col-6">
-            <a href="{{ route('books.edit', ['id'=>'']) }}" class="text-decoration-none" id="update-directly">
+            <div href="books/{book}/edit" class="text-decoration-none text-warning" id="update-directly">
                 <div class="card shadow">
                     <div class="card-body">
                         <div class="row">
@@ -46,8 +46,8 @@
                                     class="form-control form-control-sm only-digits" maxlength="10">
                             </div>
                             <div class="col-4 my-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-journal-code" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor"
+                                    class="bi bi-journal-code  w-100 h-auto" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z" />
                                     <path
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
     <div class="row justify-content-center">

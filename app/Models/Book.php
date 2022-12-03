@@ -35,13 +35,11 @@ class Book extends Model
      /**
      * Get directly the username that created the book.
      *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     * @return string
      */
-    protected function createdBy(): Attribute
+    public function getCreatedByAttribute(): string
     {
-        return new Attribute(
-            get: fn () => $this->user()->name,
-        );
+        return $this->user->name;
     }
 
     // --------------------- Relations ----------------------

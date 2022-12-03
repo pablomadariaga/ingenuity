@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -16,7 +17,7 @@ class BookController extends Controller
     {
         return view('books.index', [
             'books' => Book::orderByDate()->paginate(10)
-        ])
+        ]);
     }
 
     /**
@@ -26,7 +27,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.form', [
+            'users' => User::all()
+        ]);
     }
 
     /**
@@ -59,7 +62,10 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('books.form', [
+            'book' => Book::findOrFail($id),
+            'users' => User::all()
+        ]);
     }
 
     /**

@@ -4,10 +4,13 @@ import purge from '@erbelion/vite-plugin-laravel-purgecss'
 
 export default defineConfig({
     plugins: [
-        /* purge({
+        purge({
             templates: ['blade'],
-            safelist: ['nav-link', 'show', 'dropdown-toggle']
-        }), */
+            safelist: {
+                standard: ['nav-link', 'show', 'dropdown-toggle', 'ss-main'],
+                deep: [/^ss/,],
+            }
+        }),
         laravel({
             input: [
                 "resources/sass/app.scss",
